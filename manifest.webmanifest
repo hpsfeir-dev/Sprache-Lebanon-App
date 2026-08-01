@@ -1,0 +1,10 @@
+{
+  "name":"Yalla نحكي – Libanesisch lernen",
+  "short_name":"Yalla نحكي",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#f5f0e6",
+  "theme_color":"#123b32",
+  "description":"Dein persönlicher Trainer für libanesisches Arabisch",
+  "icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
