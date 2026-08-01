@@ -8,7 +8,7 @@ let completed=Number(localStorage.getItem('yalla-completed')||0);
 let cardIndex=0;
 
 const $=selector=>document.querySelector(selector);
-const $=selector=>document.querySelectorAll(selector);
+const $$=selector=>document.querySelectorAll(selector);
 
 function applyTheme(theme){
   document.documentElement.dataset.theme=theme;
@@ -47,7 +47,7 @@ function showCard(){
 }
 
 $$('[data-view]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
-$('[data-open]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.open)));
+$$('[data-open]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.open)));
 $('#themeToggle').addEventListener('click',()=>{
   const next=document.documentElement.dataset.theme==='dark'?'light':'dark';
   localStorage.setItem('yalla-theme',next);
