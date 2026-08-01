@@ -1,10 +1,12 @@
 {
-  "name":"Yalla نحكي – Libanesisch lernen",
-  "short_name":"Yalla نحكي",
+  "name":"Yalla Nehke – Libanesisch lernen",
+  "short_name":"Yalla Nehke",
   "start_url":"./",
   "display":"standalone",
-  "background_color":"#f5f0e6",
-  "theme_color":"#123b32",
-  "description":"Dein persönlicher Trainer für libanesisches Arabisch",
+  "background_color":"#f1ecdf",
+  "theme_color":"#102f29",
+  "description":"Libanesisches Arabisch sprechen, verstehen, lesen und schreiben",
+  "lang":"de",
+  "dir":"ltr",
   "icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
 }
