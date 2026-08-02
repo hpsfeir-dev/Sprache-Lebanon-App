@@ -244,3 +244,78 @@ Kategorie anzeigt.
 die App auf dem Handy installierbar. Der Service Worker legt die Programmdateien
 beim ersten Aufruf ab und nimmt Audiodateien und Bilder nach der ersten
 Benutzung mit — danach läuft alles offline, Aufnahmen inklusive.
+
+## 15. Die Aussprachefrage — der Kern des Problems
+
+Der Anspruch ist, Kesrouani zu lernen. Damit stellt sich die Frage, woher eine
+Stimme kommt, die auch wirklich so klingt.
+
+### Warum Sprachsynthese das nicht leisten kann
+
+Alle verfügbaren arabischen TTS-Stimmen sind auf **Hocharabisch** trainiert.
+Sie lesen, was dasteht. Gibt man ihnen قهوة, sagen sie `qahwa` — niemals
+`ʾahwe`. Das ist keine Qualitätsfrage, sondern eine grundsätzliche: Die
+Umformung von der Schrift zum Dialekt findet im Kopf des Sprechers statt, nicht
+im Schriftbild.
+
+Auch die 173 Audiodateien im Projektbestand sind synthetisch erzeugt: alle
+80 kbit/s, 48 kHz, Mono, LAME-kodiert, ohne Metadaten, in einem einzigen Commit
+hinzugefügt. Nützlich als Grundlage, aber kein Kesrouani.
+
+### Drei Ebenen, in dieser Reihenfolge
+
+`core/audio.js` fragt für jeden Text drei Quellen der Reihe nach ab:
+
+| Priorität | Quelle | Klang |
+|---|---|---|
+| 1 | **Eigene Aufnahme** (IndexedDB) | echtes Kesrouani |
+| 2 | Aufnahmebank des Projekts | synthetisch, hocharabisch geprägt |
+| 3 | Systemstimme mit Lautschrift | notdürftig, aber korrigiert |
+
+Ein farbiges Symbol zeigt, welche Quelle greift: 🎙️ rot für eure eigene Stimme,
+🔊 grün für die Projektbank, 🔈 grau für die Systemstimme.
+
+### Ebene 3: Die Stimme austricksen
+
+`core/phonetics.js` legt der Synthese nicht die Schreibweise vor, sondern den
+Klang. Aus قهوة wird أهوة — und eine hocharabische Stimme sagt „ahwe“.
+
+| Regel | Beispiel |
+|---|---|
+| ق → Knacklaut | قلب → ألب (`ʾalb`) |
+| ث → ت, ذ → د, ظ → ض | ثلاثة → تليتة (`tlēte`) |
+| ة am Wortende → ه | قهوة → أهوه (`ʾahwe`) |
+| Imāla (ā → ē) | لبنان → لبنين (`Lubnēn`) |
+
+Die Imāla lässt sich nicht zuverlässig automatisch ableiten — dafür gibt es eine
+Ausnahmeliste. Das Ergebnis ersetzt keine echte Stimme, kommt dem Bergklang aber
+deutlich näher als die Schreibweise.
+
+### Ebene 1: Das Tonstudio
+
+Die eigentliche Lösung sitzt am selben Tisch. Eine Muttersprachlerin aus
+Kesrouan liefert eine Aussprache, die kein Dienst der Welt erzeugen kann.
+
+`views/studio.js` führt Karte für Karte durch: anhören, aufnehmen, prüfen,
+behalten oder verwerfen. Aufgenommen wird über MediaRecorder, gespeichert in
+IndexedDB (localStorage wäre für Audio um Größenordnungen zu klein). Zu jeder
+Aufnahme wird vermerkt, wer gesprochen hat.
+
+Auswahlmöglichkeiten: die wichtigsten 40 Wörter als Einstieg, alles noch
+Fehlende, ein einzelnes Wortfeld, die Alltagssätze oder das Alphabet. Alle
+Aufnahmen lassen sich als eine Datei sichern und auf ein anderes Gerät
+übertragen — die Stimme der Familie bleibt so erhalten.
+
+## 16. Hörarchiv statt Kopieren
+
+Für echtes gesprochenes Libanesisch aus dem Netz gilt eine klare Grenze: Ton aus
+fremden Videos herunterzuladen und in die App zu packen wäre eine
+Urheberrechtsverletzung.
+
+`views/listening.js` löst das anders: Gespeichert werden **nur Verweise** — URL,
+Zeitmarke, eigene Notiz und die Wendungen, die man dort gehört hat. Abgespielt
+wird beim Anbieter, geübt wird in der App. Die notierten Wendungen wandern als
+Karten in den normalen Übungspool.
+
+Damit wird jedes Video, jeder Podcast und jeder Videoanruf mit der Familie zu
+einer Quelle für den eigenen Wortschatz — ohne fremdes Material zu vereinnahmen.

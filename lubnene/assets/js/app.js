@@ -16,6 +16,8 @@ var App = (function () {
                    JourneyView.render(v, {});
                  },
     'saetze':    function (v, rest) { PhrasesView.render(v, { set: rest[0] }); },
+    'studio':    function (v, rest) { rest[0] === 'liste' ? StudioView.renderList(v) : StudioView.render(v); },
+    'hoeren':    function (v) { ListeningView.render(v); },
     'duel':      function (v) { DuelView.render(v); },
     'stats':     function (v) { StatsView.render(v); }
   };
@@ -136,6 +138,13 @@ var App = (function () {
 
     if (!location.hash) location.hash = '#/home';
     render();
+
+    // Eigene Aufnahmen nachladen und die Ansicht danach auffrischen
+    if (typeof Recorder !== 'undefined') {
+      Recorder.init().then(function (keys) {
+        if (Object.keys(keys).length) render();
+      });
+    }
   }
 
   return { render: render, boot: boot, profileMenu: profileMenu };

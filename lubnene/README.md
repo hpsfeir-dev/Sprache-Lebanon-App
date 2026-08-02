@@ -32,6 +32,8 @@ ist als PWA installierbar und läuft danach offline, Aufnahmen inklusive.
 | **20 Grammatiklektionen** | plus 15 vollständig konjugierte Verben |
 | **Reise durch den Libanon** | 8 Epochen, 8 Orte, 6 Kapitel Hocharabisch-Brücke |
 | **Eigene Wörter** | mit arabischer Bildschirmtastatur |
+| **Tonstudio** | eure eigene Stimme aufnehmen — die einzige echte Kesrouani-Quelle |
+| **Hörarchiv** | Videos mit Zeitmarke sammeln und die Wendungen daraus üben |
 
 ## Besonderheiten
 
@@ -42,6 +44,15 @@ ist als PWA installierbar und läuft danach offline, Aufnahmen inklusive.
 hören, Umschrift tippen, arabisch schreiben, Lückentext, Karteikarte.
 
 **Spaced Repetition (SM-2).** Verlauf bei „gut": 1 → 3 → 8 → 20 → 50 Tage.
+
+**Aussprache in drei Ebenen.** Jeder Text sucht sich die beste Quelle: zuerst
+eure eigene Aufnahme (🎙️ rot), dann die Aufnahmebank des Projekts (🔊 grün),
+zuletzt die Systemstimme (🔈 grau) — die den Text vorher phonetisch umgeschrieben
+bekommt, damit aus قهوة ein „ahwe" statt „qahwa" wird.
+
+> Keine arabische Sprachsynthese spricht Kesrouani — alle sind auf Hocharabisch
+> trainiert. Wer den echten Klang vom Berg will, nimmt ihn im **Tonstudio**
+> selbst auf. Eine Muttersprachlerin in der Familie schlägt jeden Dienst.
 
 **Zwei Profile** mit getrenntem Lernstand, gemeinsamen eigenen Wörtern und einem
 Duell-Modus für beide an einem Gerät.
@@ -57,6 +68,8 @@ Duell-Modus für beide an einem Gerät.
 | Reise | Zeitreise · Orte · Hocharabisch-Brücke |
 | Grammatik | 20 Lektionen + Verbtabellen |
 | Dialoge | mitlesen, anhören, eigene Rolle üben |
+| Tonstudio | eigene Aufnahmen einsprechen und sichern |
+| Hörarchiv | Quellen mit Zeitmarke sammeln |
 | Meine Wörter | anlegen, üben, sichern |
 | Duell | zu zweit an einem Gerät |
 | Fortschritt | Kennzahlen, Heatmap, Einstellungen |
