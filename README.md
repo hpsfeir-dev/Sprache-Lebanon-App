@@ -28,3 +28,21 @@ Danach `http://localhost:8080/Sprache-Lebanon-App/` öffnen.
 5. intelligentes Wiederholungssystem
 
 Persönliche Vokabeln bleiben im Prototyp ausschließlich im Browser gespeichert.
+
+---
+
+## Ausgebaute App: `lubnene/`
+
+Neben diesem Prototyp liegt im Ordner [`lubnene/`](lubnene/) eine ausgebaute
+Version mit 494 übbaren Karten, vollständigem Schriftkurs, SM-2-Wiederholungs-
+system, Dialogen, Grammatik und einem Kulturmodul „Reise durch den Libanon".
+
+Sie nutzt **dieselben MP3-Aufnahmen** wie dieser Prototyp (157 Karten sprechen
+mit echter Stimme) und ist ebenfalls als PWA installierbar. Damit sind die
+Roadmap-Punkte 4 (Schriftkurs) und 5 (Wiederholungssystem) umgesetzt.
+
+Dieser Prototyp hier bleibt unverändert bestehen.
+
+```bash
+python3 -m http.server 8080   # dann http://localhost:8080/lubnene/
+```
