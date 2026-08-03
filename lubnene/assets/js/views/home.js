@@ -50,14 +50,19 @@ var HomeView = (function () {
     /* Schnellzugriff */
     view.appendChild(U.el('h3', { class: 'section-title', text: 'Schnell rein' }));
     var quick = U.el('div', { class: 'quick-grid' }, [
+      quickCard('🎙️', 'Tonstudio', 'Eure eigene Stimme aufnehmen', '#/studio'),
+      quickCard('🎧', 'Sätze hören', '123 Alltagssätze nach Situation', '#/saetze'),
+      quickCard('🇱🇧', 'Reise durch den Libanon', 'Zeitreise, Orte, Hocharabisch', '#/reise'),
       quickCard('ﺃ', 'Schrift lernen', 'Alphabet, Verbindungen, Handschrift', '#/alphabet'),
       quickCard('💬', 'Dialoge', 'Beim Bäcker, im Service, zu Hause', '#/dialogues'),
       quickCard('📚', 'Grammatik', 'Der Kesrouan-Klang, b-Präsens, baddi', '#/grammar'),
+      quickCard('📺', 'Hörarchiv', 'Echte Stimmen aus dem Netz', '#/hoeren'),
       quickCard('✍️', 'Eigene Wörter', 'Was ihr selbst sammelt', '#/mywords'),
-      quickCard('⚔️', 'Duell zu zweit', 'Ihr beide auf einem Gerät', '#/duel'),
-      quickCard('🎯', 'Nach Themen üben', 'Alle Wortfelder einzeln', '#/learn')
+      quickCard('⚔️', 'Duell zu zweit', 'Ihr beide auf einem Gerät', '#/duel')
     ]);
     view.appendChild(quick);
+
+    view.appendChild(voiceCard(poolIds));
 
     /* Wort des Tages — stabil pro Tag und Profil */
     var pool = DATA.vocab;
@@ -97,6 +102,44 @@ var HomeView = (function () {
     searchBox.appendChild(inp);
     searchBox.appendChild(results);
     view.appendChild(searchBox);
+  }
+
+  /* Wie viel der App spricht schon mit echter Stimme? */
+  function voiceCard(poolIds) {
+    var all = Items.all();
+    var eigen = 0, bank = 0;
+    all.forEach(function (v) {
+      var s = Audio2.source(v.ar);
+      if (s === 'eigen') eigen++; else if (s === 'bank') bank++;
+    });
+    var total = all.length;
+    var pctEigen = Math.round(eigen / total * 100);
+    var pctBank = Math.round(bank / total * 100);
+
+    var card = U.el('div', { class: 'card card-voice' }, [
+      U.el('div', { class: 'row-between' }, [
+        U.el('h3', { text: '🎙️ Stimmen-Abdeckung' }),
+        U.el('span', { class: 'pill', text: (eigen + bank) + ' / ' + total })
+      ]),
+      U.el('div', { class: 'voice-bar' }, [
+        U.el('div', { class: 'vb-own',  style: 'width:' + pctEigen + '%' }),
+        U.el('div', { class: 'vb-bank', style: 'width:' + pctBank + '%' })
+      ]),
+      U.el('div', { class: 'voice-legend' }, [
+        U.el('span', {}, [U.el('i', { class: 'dot dot-own' }), U.el('span', { text: eigen + ' eure Stimme' })]),
+        U.el('span', {}, [U.el('i', { class: 'dot dot-bank' }), U.el('span', { text: bank + ' Aufnahmebank' })]),
+        U.el('span', {}, [U.el('i', { class: 'dot dot-tts' }), U.el('span', { text: (total - eigen - bank) + ' Systemstimme' })])
+      ])
+    ]);
+
+    card.appendChild(U.el('p', { class: 'muted small', text: eigen
+      ? 'Jede eigene Aufnahme ersetzt dauerhaft die Computerstimme — und klingt so, wie bei euch im Dorf gesprochen wird.'
+      : 'Noch keine eigene Aufnahme. Keine Sprachsynthese spricht Kesrouani — eine Muttersprachlerin in der Familie schon.' }));
+
+    card.appendChild(U.el('button', { class: 'btn btn-primary btn-block',
+      text: eigen ? '🎙️ Weiter aufnehmen' : '🎙️ Erste Aufnahme machen',
+      onclick: function () { location.hash = '#/studio'; } }));
+    return card;
   }
 
   function wordRow(w) {

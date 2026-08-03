@@ -77,7 +77,8 @@ var ListeningView = (function () {
           var ids = it.phrases.map(function (p) {
             var hit = Items.all().filter(function (v) { return Audio2.norm(v.ar) === Audio2.norm(p.ar); })[0];
             if (hit) return hit.id;
-            return Store.addCustom({ ar: p.ar, tr: p.tr, de: p.de, note: 'Gehört in: ' + (it.title || 'Hörarchiv') }).id;
+            return Store.addCustom({ ar: p.ar, tr: p.tr, de: p.de,
+              note: 'Gehört in: ' + (it.title || 'Hörarchiv'), deck: 'gehoert' }).id;
           });
           Drill.start({ ids: ids, title: it.title || 'Hörarchiv', limit: ids.length,
             maxNew: ids.length, backTo: '#/hoeren' });

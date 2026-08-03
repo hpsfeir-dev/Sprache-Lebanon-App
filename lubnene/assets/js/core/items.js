@@ -13,7 +13,9 @@ var Items = (function () {
   }
 
   function byDeck(deckId) {
-    if (deckId === 'meine') return Store.custom.slice();
+    if (deckId === 'meine' || deckId === 'reise' || deckId === 'gehoert') {
+      return Store.custom.filter(function (w) { return (w.deck || 'meine') === deckId; });
+    }
     if (deckId === 'hoersaetze') return (DATA.phrases || []).slice();
     return DATA.vocab.filter(function (v) { return v.deck === deckId; });
   }
@@ -27,6 +29,15 @@ var Items = (function () {
       d.push({ id: 'hoersaetze', title: 'Sätze mit echter Stimme', icon: '🎧', level: 2,
                desc: DATA.phrases.length + ' Alltagssätze, alle von einer echten Stimme gesprochen.' });
     }
+    var extra = [
+      { id: 'reise',   title: 'Aus der Reise',   icon: '🇱🇧', level: 0,
+        desc: 'Wörter aus Zeitreise und Orten.' },
+      { id: 'gehoert', title: 'Selbst gehört',   icon: '📺', level: 0,
+        desc: 'Wendungen aus eurem Hörarchiv.' }
+    ];
+    extra.forEach(function (e) {
+      if (Store.custom.some(function (w) { return w.deck === e.id; })) d.push(e);
+    });
     d.push({ id: 'meine', title: 'Meine Wörter', icon: '✍️', level: 0,
              desc: 'Alles, was ihr selbst hinzugefügt habt.' });
     return d;

@@ -904,3 +904,21 @@ p  { margin: 0 0 .6rem; }
 
 .listen-card { border-top-color: var(--red); }
 .listen-card a.btn { text-decoration: none; }
+
+/* Stimmen-Abdeckung */
+.card-voice { border-top-color: var(--red); }
+.voice-bar {
+  display: flex; height: 12px; border-radius: 999px; overflow: hidden;
+  background: var(--card-2); margin: .7rem 0 .5rem;
+}
+.vb-own  { background: var(--red); transition: width .4s ease; }
+.vb-bank { background: var(--accent); transition: width .4s ease; }
+.voice-legend {
+  display: flex; flex-wrap: wrap; gap: .8rem;
+  font-size: .76rem; color: var(--muted); margin-bottom: .5rem;
+}
+.voice-legend span { display: inline-flex; align-items: center; gap: .3rem; }
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.dot-own  { background: var(--red); }
+.dot-bank { background: var(--accent); }
+.dot-tts  { background: var(--card-2); border: 1px solid var(--line); }

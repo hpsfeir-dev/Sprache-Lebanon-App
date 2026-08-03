@@ -10,7 +10,9 @@ var MyWordsView = (function () {
 
     view.appendChild(form(null));
 
-    var words = Store.custom.slice().reverse();
+    var words = Store.custom.filter(function (w) {
+      return (w.deck || 'meine') === 'meine';
+    }).reverse();
     view.appendChild(U.el('div', { class: 'card row-actions' }, [
       U.el('button', { class: 'btn btn-primary', text: '▶ Eigene Wörter üben (' + words.length + ')',
         onclick: function () {

@@ -218,7 +218,8 @@ var JourneyView = (function () {
       var hit = Items.all().filter(function (v) { return Audio2.norm(v.ar) === Audio2.norm(w.ar); })[0];
       if (hit) return hit.id;
       // noch nicht im Bestand → als eigenes Wort aufnehmen, damit es geübt werden kann
-      var added = Store.addCustom({ ar: w.ar, tr: w.tr, de: w.de, note: 'Aus: ' + title });
+      var added = Store.addCustom({ ar: w.ar, tr: w.tr, de: w.de,
+        note: 'Aus: ' + title, deck: 'reise' });
       return added.id;
     });
     Drill.start({ ids: ids, title: title, limit: ids.length, maxNew: ids.length, backTo: backTo });

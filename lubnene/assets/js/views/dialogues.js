@@ -77,7 +77,10 @@ var DialogueView = (function () {
     }
 
     controls.appendChild(btn('▶ Ganzen Dialog anhören', function () {
-      if (!TTS.hasArabicVoice()) return U.toast('Keine arabische Stimme im System gefunden.', 'warn');
+      var hatAufnahmen = d.lines.some(function (l) { return Audio2.has(l.ar); });
+      if (!hatAufnahmen && !TTS.hasArabicVoice()) {
+        return U.toast('Keine Aufnahme und keine arabische Systemstimme gefunden.', 'warn');
+      }
       playAll(d.lines, 0);
     }, true));
     controls.appendChild(btn('🇩🇪 Übersetzung', function () { state.showDe = !state.showDe; paint(); }));
@@ -118,9 +121,12 @@ var DialogueView = (function () {
   function playAll(lines, i) {
     if (i >= lines.length) return;
     Audio2.play(lines[i].ar);
-    // Pause grob nach Satzlänge bemessen
-    var wait = 1200 + lines[i].ar.length * 90;
-    setTimeout(function () { playAll(lines, i + 1); }, wait);
+    // Wenn eine Aufnahme vorliegt, richtet sich die Pause nach ihrer echten
+    // Länge; sonst wird sie nach der Satzlänge geschätzt.
+    Audio2.duration(lines[i].ar, function (ms) {
+      var wait = ms ? ms + 700 : 1200 + lines[i].ar.length * 90;
+      setTimeout(function () { playAll(lines, i + 1); }, wait);
+    });
   }
 
   return { render: render };

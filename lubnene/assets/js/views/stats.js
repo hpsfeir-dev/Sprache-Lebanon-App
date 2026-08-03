@@ -90,7 +90,44 @@ var StatsView = (function () {
       view.appendChild(wc);
     }
 
+    view.appendChild(voicePanel());
     view.appendChild(settingsCard());
+  }
+
+  /* Stimmen-Abdeckung je Wortfeld — zeigt, wo Aufnehmen am meisten bringt. */
+  function voicePanel() {
+    var c = U.el('div', { class: 'card' }, [
+      U.el('h3', { text: '🎙️ Stimmen-Abdeckung' }),
+      U.el('p', { class: 'muted small', text: 'Wie viele Karten mit eurer eigenen Stimme sprechen — je Wortfeld.' })
+    ]);
+
+    var offen = [];
+    Items.decks().forEach(function (d) {
+      var list = Items.byDeck(d.id);
+      if (!list.length) return;
+      var eigen = list.filter(function (v) { return Audio2.source(v.ar) === 'eigen'; }).length;
+      var pct = Math.round(eigen / list.length * 100);
+      if (eigen < list.length) offen.push({ deck: d, fehlt: list.length - eigen });
+      c.appendChild(U.el('div', { class: 'deck-stat' }, [
+        U.el('div', { class: 'dstat-head' }, [
+          U.el('span', { text: d.icon + ' ' + d.title }),
+          U.el('span', { class: 'muted', text: eigen + '/' + list.length })
+        ]),
+        U.progressBar(pct)
+      ]));
+    });
+
+    if (offen.length) {
+      offen.sort(function (a, b) { return a.fehlt - b.fehlt; });
+      var naechste = offen[0];
+      c.appendChild(U.el('div', { class: 'note-card', text:
+        '💡 Am schnellsten fertig wäre „' + naechste.deck.title + '“ — dort fehlen nur noch ' +
+        naechste.fehlt + ' Aufnahmen.' }));
+    }
+
+    c.appendChild(U.el('button', { class: 'btn btn-primary btn-block', text: '🎙️ Zum Tonstudio',
+      onclick: function () { location.hash = '#/studio'; } }));
+    return c;
   }
 
   function heatmap(history) {

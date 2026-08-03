@@ -92,7 +92,9 @@ var Store = (function () {
   /* --- eigene Wörter --- */
   function addCustom(word) {
     word.id = 'c' + Date.now() + Math.floor(Math.random() * 1000);
-    word.deck = 'meine';
+    // Wörter aus Reise und Hörarchiv bekommen ein eigenes Fach, damit die
+    // selbst gesammelte Liste sauber bleibt.
+    word.deck = word.deck || 'meine';
     word.custom = true;
     state.custom.push(word);
     save();
